@@ -714,7 +714,7 @@
                 localStorage.setItem('orderData', JSON.stringify(formData));
 
                 try {
-                    const response = await fetch('https://zan123.netlify.app/', {
+                    const response = await fetch('https://dolphin-app-z8fq2.ondigitalocean.app/', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -754,7 +754,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-  origin: 'https://zan123.netlify.app/', // Zamenjaj z domeno svoje spletne strani
+  origin: 'https://dolphin-app-z8fq2.ondigitalocean.app/', // Zamenjaj z domeno svoje spletne strani
   methods: ['POST'],
 }));
 
