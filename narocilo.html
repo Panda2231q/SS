@@ -693,28 +693,41 @@
             }
         }
 
-        async function submitForm() {
-            if (validateStep(4)) {
-                const total = parseFloat(document.getElementById('summary-total').textContent.replace('€', ''));
-                const formData = {
-                    clientName: document.getElementById('clientName').value,
-                    clientEmail: document.getElementById('clientEmail').value,
-                    projectName: document.getElementById('projectName').value,
-                    projectDesc: document.getElementById('projectDesc').value,
-                    projectDate: document.getElementById('projectDate').value,
-                    projectCategory: document.getElementById('projectCategory').value,
-                    package: selectedPackage,
-                    addons: selectedAddons,
-                    payment: selectedPayment,
-                    total: total,
-                    discount: parseFloat(document.getElementById('summary-discount').textContent.replace('€', ''))
-                };
+       async function submitForm() {
+  const total = parseFloat(document.getElementById('summary-total').textContent.replace('€', ''));
+  try {
+    const response = await fetch('https://dolphin-app-z8fq2.ondigitalocean.app/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount: total * 100,
+        currency: 'eur',
+        payment_method_types: ['card']
+      })
+    });
 
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`Strežnik je vrnil napako: ${response.status} - ${text}`);
+    }
+
+    const session = await response.json();
+    const stripe = Stripe('tvoj_javni_ključ'); // Zamenjaj z resničnim ključem
+    const { error } = await stripe.redirectToCheckout({ sessionId: session.id });
+    if (error) {
+      console.error('Stripe napaka:', error);
+      alert('Napaka pri plačilu: ' + error.message);
+    }
+  } catch (error) {
+    console.error('Napaka:', error);
+    alert('Napaka pri povezavi s strežnikom: ' + error.message);
+  }
+}
                 // Shrani podatke v lokalni pomnilnik
                 localStorage.setItem('orderData', JSON.stringify(formData));
 
                 try {
-                    const response = await fetch('https://dolphin-app-z8fq2.ondigitalocean.app/narocilo.html', {
+                    const response = await fetch('https://dolphin-app-z8fq2.ondigitalocean.app/create-checkout-session', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
