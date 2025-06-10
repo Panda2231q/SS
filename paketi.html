@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TvojeIme | Paketi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        /* === NOVE ANIMACIJE === */
+       @keyframes fadeInUp {
+    from { 
+        opacity: 0.5; /* Popravek: decimalna pika namesto vejice */
+        transform: translateY(20px); 
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0); 
+    }
+}
+
+.service-card {
+    animation: fadeInUp 1s ease-out forwards;
+    opacity: 0; /* Začetna vrednost mora biti število (ne niz '0,5') */
+}
+
+        @keyframes hoverFloat {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* === ANIMIRANE KOMPONENTE === */
+        .hero h1 {
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero p {
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        /* SPREMENI */
+.service-card {
+    transition: all 0.3s ease;
+    transform: translateY(0); /* Dodaj začetno stanje */
+}
+
+.service-card:hover {
+    transform: translateY(-10px) scale(1.02); /* Kombiniraj v eno transformacijo */
+    z-index: 2; /* Premakni na vrh med hoverjem */
+}
+
+        .btn {
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(255,255,255,0.3), 
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: btnShine 3s infinite;
+        }
+
+        @keyframes btnShine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        /* === POPRAVLJENA STRUKTURA === */
+        body {
+            background: linear-gradient(45deg, var(--light), #fff);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .package-grid {
+    perspective: 1000px; /* Dodaj globino */
+}
+
+.service-card {
+    transform-style: preserve-3d;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+        .service-card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            margin: 1rem;
+            position: relative;
+            transition: transform 0.3s ease;
+            z-index: 1;
+        }
+
+       /* SPREMENI */
+.service-card.premium {
+    transform: scale(1.03); /* Manjše povečanje */
+    margin: 0 -0.5rem; /* Manjši prekriv */
+    z-index: 2;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.service-card.premium:hover {
+    transform: translateY(-10px) scale(1.04); /* Manjši hover efekt */
+    margin: 0 -0.7rem;
+}
+
+@media (max-width: 1200px) {
+    .service-card.premium {
+        transform: scale(1) !important;
+        margin: 1rem 0 !important;
+    }
+}
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 1;
+            animation: pulse 2s infinite;
+            white-space: nowrap;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            color: var(--dark);
+        }
+
+        .features {
+            list-style: none;
+            margin: 2rem 0;
+            padding: 0;
+        }
+
+        .features li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+        /* VSA STILSKA PRAVILA IZ VAŠEGA ORIGINALNEGA PRIMERA */
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(45deg, var(--light), #fff);
+            color: var(--dark);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 12rem 5% 6rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .services {
+            padding: 5rem 5%;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border: 2px solid var(--primary); /* DODANO: Obroba za boljšo vidnost */
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            z-index: 3;
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .service-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .contact {
+            padding: 5rem 5%;
+            background: var(--light);
+        }
+
+        .contact-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        button {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        .package-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding: 5rem 5%;
+        }
+
+        .service-card {
+    min-width: 280px; /* Manjša minimalna širina */
+    max-width: 350px; /* Manjša maksimalna širina */
+    margin: 0.5rem;
+}
+
+.service-card.premium {
+    min-width: 300px; /* Samo 20px več od osnovnega */
+    max-width: 370px;
+}
+
+        /* Prilagodi ostale kartice */
+        .service-card:not(.premium) {
+            order: 1;
+        }
+
+        .service-card:last-child:not(.premium) {
+            order: 3;
+        }
+        
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">TvojeIme</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Domov</a></li>
+            <li><a href="paketi.html" class="active">Paketi</a></li>
+            <li><a href="narocilo.html">Naroči</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <h1>Naši Paketi</h1>
+        <p>Izberite optimalno rešitev za vaš projekt</p>
+    </section>
+
+    <div class="package-grid">
+        <!-- Osnovni paket -->
+        <div class="service-card" style="order: 1">
+            <h3>Osnovni paket</h3>
+            <div class="price">300€</div>
+            <ul class="features">
+                <li><i class="fas fa-check"></i>5 prilagojenih podstrani</li>
+                <li><i class="fas fa-check"></i>Responsive dizajn</li>
+                <li><i class="fas fa-check"></i>Rok izdelave: 2-3 tedne</li>
+                <li><i class="fas"></i>Brez SEO optimizacije</li>
+            </ul>
+            <a href="narocilo.html" class="btn">Izberi</a>
+        </div>
+
+        <!-- Premium paket -->
+        <div class="service-card premium" style="order: 2">
+            <div class="popular-badge">
+                <i class="fas fa-star"></i> Najbolj priljubljeno
+            </div>
+            <br>
+            <h3>Premium paket</h3>
+            <div class="price">500€</div>
+            <ul class="features">
+                <li><i class="fas fa-check"></i>Vse iz osnovnega paketa +</li>
+                <li><i class="fas fa-check"></i>Do 15 podstrani</li>
+                <li><i class="fas fa-check"></i>Napredni SEO </li>
+                <li><i class="fas fa-check"></i>E-trgovina do 50 produktov</li>
+                <li><i class="fas fa-check"></i>Blog sekcija</li>
+                <li><i class="fas fa-check"></i>Rok izdelave: 4-5 tednov</li>
+            </ul>
+            <a href="narocilo.html" class="btn">Optimalna izbira</a>
+        </div>
+
+        <!-- Advanced paket -->
+        <div class="service-card" style="order: 3">
+            <h3>Advanced paket</h3>
+            <div class="price" style="font-size: 1.8rem;">Cena po dogovoru</div>
+            <ul class="features">
+                <li><i class="fas fa-check"></i>Vse iz premium paketa +</li>
+                <li><i class="fas fa-check"></i>Neomejeno število podstrani</li>
+                <li><i class="fas fa-check"></i>Polni SEO audit + strategija</li>
+                <li><i class="fas fa-check"></i>E-trgovina s plačilnimi prehodi</li>
+                <li><i class="fas fa-check"></i>Redno vzdrževanje</li>
+                <li><i class="fas fa-check"></i>Rok izdelave: Po dogovoru</li>
+            </ul>
+            <a href="kontakt.html" class="btn">Kontaktirajte nas</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animirani scroll za navigacijske povezave
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                });
+            });
+
+            // Interaktivne kartice - zakomentirano, da preprečimo izginjanje
+        /*
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'scale(1.03) rotate(1deg)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'scale(1) rotate(0deg)';
+                });
+            });
+            */
+        });
+    </script>
+</body>
+</html>

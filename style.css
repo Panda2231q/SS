@@ -1,0 +1,234 @@
+/* Osnovne nastavitve in reset */
+:root {
+  --primary: #2563eb;
+  --secondary: #7c3aed;
+  --accent: #f59e0b;
+  --dark: #1e293b;
+  --light: #f8fafc;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: linear-gradient(45deg, var(--light), #fff);
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* Navigacija */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 5%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links .active {
+  color: var(--primary);
+}
+
+/* Hero sekcija */
+.hero {
+  text-align: center;
+  padding: 12rem 5% 6rem;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  color: white;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Paketi */
+.package-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 5rem 5%;
+  flex-wrap: wrap;
+}
+
+.service-card {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  background: white;
+  padding: 2rem;
+  border: 2px solid var(--primary);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center bottom;
+  opacity: 1;
+  transform: translateY(0);
+  position: relative;
+  will-change: transform;
+}
+
+.service-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.service-card.premium {
+  border-color: var(--secondary);
+  transform: scale(1.02);
+  margin: 0 -1rem;
+  z-index: 2;
+}
+
+.service-card.premium:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--secondary);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  animation: pulse 2s infinite;
+}
+
+.price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 1rem 0;
+  color: var(--dark);
+}
+
+.features {
+  list-style: none;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.features li {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Gumbi */
+.btn {
+  display: inline-block;
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Animacije */
+@keyframes pulse {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.05); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+/* Odzivnost */
+@media (max-width: 1200px) {
+  .service-card.premium {
+    margin: 0;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .package-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .service-card {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+.form-step {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease-out;
+    display: none;
+}
+
+.form-step.active {
+    opacity: 1;
+    transform: translateY(0);
+    display: block;
+}
+.next-step, .prev-step {
+    margin: 10px;
+    transition: all 0.3s;
+}
+
+.prev-step {
+    background: none;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 0.8rem 1.5rem;
+}
+
+.prev-step:hover {
+    background: rgba(37, 99, 235, 0.1);
+}
