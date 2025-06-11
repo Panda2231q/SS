@@ -719,7 +719,7 @@ async function submitForm() {
 
     const formData = {
         package: selectedPackage,
-        addබadd-ons: selectedAddons,
+        addons: selectedAddons,
         projectName: document.getElementById('projectName').value,
         clientName: document.getElementById('clientName').value,
         clientEmail: document.getElementById('clientEmail').value,
@@ -756,7 +756,7 @@ async function submitForm() {
             throw new Error(`Strežnik je vrnil napako: ${response.status} - ${errorText}`);
         }
 
-        const { sessionId } = await response.json();
+        const { id: sessionId } = await response.json();
         
         const { error } = await stripe.redirectToCheckout({ 
             sessionId: sessionId 
@@ -775,7 +775,11 @@ async function submitForm() {
 document.addEventListener('DOMContentLoaded', () => {
     updateSteps();
     updateSummary();
-    document.querySelector('.prev-step').onclick = prevStep;
+    
+    document.querySelectorAll('.prev-step').forEach(button => {
+        button.onclick = prevStep;
+    });
+
     document.getElementById('discountCode').addEventListener('input', updateSummary);
 
     document.querySelectorAll('.project-type-card').forEach(card => {
@@ -788,6 +792,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.payment-card').forEach(card => {
         card.addEventListener('click', selectPayment);
+    });
+
+    document.querySelectorAll('.next-step').forEach(button => {
+        button.onclick = currentStep === totalSteps ? submitForm : nextStep;
     });
 });
 </script>
