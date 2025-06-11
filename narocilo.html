@@ -78,7 +78,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Postavitev procesa naročila */
         .order-process {
             display: grid;
             grid-template-columns: 250px 1fr;
@@ -144,7 +143,6 @@
             display: block;
         }
 
-        /* Stili za izbiro paketa */
         .project-type-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -171,7 +169,6 @@
             background: rgba(37, 99, 235, 0.05);
         }
 
-        /* Stili za dodatke */
         .addons-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -196,7 +193,6 @@
             border-color: var(--primary);
         }
 
-        /* Povzetek */
         .summary {
             padding: 2rem;
             border-radius: 1rem;
@@ -218,7 +214,6 @@
             border-bottom: none;
         }
 
-        /* Možnosti plačila */
         .payment-options {
             display: flex;
             gap: 1rem;
@@ -240,7 +235,6 @@
             background: rgba(37, 99, 235, 0.05);
         }
 
-        /* Predogled cene */
         .price-preview {
             position: fixed;
             bottom: 0;
@@ -286,7 +280,6 @@
             background: rgba(37, 99, 235, 0.1);
         }
 
-        /* Animacije */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateX(20px); }
             to { opacity: 1; transform: translateX(0); }
@@ -306,95 +299,96 @@
                 padding: 0.5rem;
             }
         }
+
         .form-step#step2 {
-    padding: 2.5rem;
-    background: linear-gradient(145deg, #ffffff, #f8fafc);
-    border-radius: 1rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-}
+            padding: 2.5rem;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 1rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
 
-.form-step#step2 h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: var(--dark);
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+        .form-step#step2 h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-.form-description {
-    font-size: 1rem;
-    color: #64748b;
-    margin-bottom: 2rem;
-}
+        .form-description {
+            font-size: 1rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
 
-.form-group {
-    margin-bottom: 1.8rem;
-}
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
 
-.input-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
 
-.input-wrapper i {
+        .input-wrapper i {
             position: absolute;
             left: 1rem;
-            top: 50%; /* Popravek za vertikalno centriranje */
+            top: 50%;
             transform: translateY(-50%);
             color: var(--primary);
             font-size: 1.2rem;
-}
+        }
 
-.form-group label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--dark);
-    margin-bottom: 0.5rem;
-}
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
-    padding: 1rem 1rem 1rem 2.8rem; /* Dodaten prostor za ikono */
-    border: 2px solid #e2e8f0;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 1rem 1rem 1rem 2.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
-    outline: none;
-}
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
+            outline: none;
+        }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 120px;
-}
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: #94a3b8;
-}
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #94a3b8;
+        }
 
-@media (max-width: 768px) {
-    .form-step#step2 {
-        padding: 1.5rem;
-    }
+        @media (max-width: 768px) {
+            .form-step#step2 {
+                padding: 1.5rem;
+            }
 
-    .form-step#step2 h2 {
-        font-size: 1.5rem;
-    }
+            .form-step#step2 h2 {
+                font-size: 1.5rem;
+            }
 
-    .input-wrapper i {
-        top: 2.8rem;
-    }
-}
+            .input-wrapper i {
+                top: 2.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -415,19 +409,19 @@
 
     <div class="order-process">
         <div class="order-steps">
-            <div class="step-indicator active" onclick="showStep(1)">
+            <div class="step-indicator active" data-step="1">
                 <span class="step-number">1</span>
                 Izberite paket
             </div>
-            <div class="step-indicator" onclick="showStep(2)">
+            <div class="step-indicator" data-step="2">
                 <span class="step-number">2</span>
                 Podrobnosti
             </div>
-            <div class="step-indicator" onclick="showStep(3)">
+            <div class="step-indicator" data-step="3">
                 <span class="step-number">3</span>
                 Dodatki
             </div>
-            <div class="step-indicator" onclick="showStep(4)">
+            <div class="step-indicator" data-step="4">
                 <span class="step-number">4</span>
                 Plačilo
             </div>
@@ -436,13 +430,13 @@
             <div class="form-step active" id="step1">
                 <h2>Izberite Paket</h2>
                 <div class="project-type-grid">
-                    <div class="project-type-card" onclick="selectPackage('basic')">
+                    <div class="project-type-card" data-package-type="basic">
                         <i class="fas fa-leaf"></i>
                         <h3>Osnovni Paket</h3>
                         <p>Preprosta prezentacijska stran</p>
                         <div class="price">300€</div>
                     </div>
-                    <div class="project-type-card" onclick="selectPackage('pro')">
+                    <div class="project-type-card" data-package-type="professional">
                         <i class="fas fa-rocket"></i>
                         <h3>Profesionalni Paket</h3>
                         <p>Napredna spletna stran z e-trgovino</p>
@@ -505,18 +499,18 @@
             <div class="form-step" id="step3">
                 <h2>3. Dodatne Opcije</h2>
                 <div class="addons-grid">
-                    <div class="addon-card" onclick="toggleAddon('seo')">
+                    <div class="addon-card" data-addon-type="seo">
                         <h3>SEO Optimizacija <span>+299€</span></h3>
                         <p>Izboljšajte vašo spletno prisotnost</p>
                         <p>Že vključeno s profesionalnim paketom</p>
                     </div>
-                    <div class="addon-card" onclick="toggleAddon('hosting')">
+                    <div class="addon-card" data-addon-type="hosting">
                         <h3>Hosting za 1 leto <span>+199€/leto</span></h3>
                         <p>Zanesljivo strežniško gostovanje</p>
                     </div>
-                    <div class="addon-card" onclick="toggleAddon('vzdrževanje')">
-                        <h3>Vzdrževanje <span>+199/leto</span></h3>
-                        <p>redno vzdrževanje in popravki po vaši želji</p>
+                    <div class="addon-card" data-addon-type="vzdrževanje">
+                        <h3>Vzdrževanje <span>+199€/leto</span></h3>
+                        <p>Redno vzdrževanje in popravki po vaši želji</p>
                     </div>
                 </div>
             </div>
@@ -529,7 +523,7 @@
                 <div class="summary">
                     <div class="summary-item">
                         <span>Izbrani Paket:</span>
-                        <span id="summary-package">Osnovni Paket</span>
+                        <span id="summary-package">Ni izbran</span>
                     </div>
                     <div class="summary-item">
                         <span>Dodatki:</span>
@@ -541,15 +535,15 @@
                     </div>
                     <div class="summary-item total">
                         <span>Skupaj:</span>
-                        <span id="summary-total">300€</span>
+                        <span id="summary-total">0€</span>
                     </div>
                 </div>
                 <div class="payment-options">
-                    <div class="payment-card" onclick="selectPayment('card')">
+                    <div class="payment-card" data-payment-method="card">
                         <i class="fas fa-credit-card"></i>
                         <span>Kreditna Kartica</span>
                     </div>
-                    <div class="payment-card" onclick="selectPayment('paypal')">
+                    <div class="payment-card" data-payment-method="paypal">
                         <i class="fab fa-paypal"></i>
                         <span>PayPal</span>
                     </div>
@@ -559,14 +553,14 @@
     </div>
 
     <div class="price-preview">
-        <div class="price-total">300€</div>
+        <div class="price-total">0€</div>
         <div class="form-navigation">
             <button class="prev-step"><i class="fas fa-arrow-left"></i> Nazaj</button>
             <button class="next-step">Naprej <i class="fas fa-arrow-right"></i></button>
         </div>
     </div>
 
-    <script>
+<script>
 const stripe = Stripe('pk_test_51RYUBk85PVLMpR1TAbwqilK6C9Me4W4oDyOZnnvEcOGFO89GhBHcK1pjpntZvVLPQiR5EMhwnRi62qu8wZub6rVI00n58gsdWo');
 
 let currentStep = 1;
@@ -625,7 +619,7 @@ function updateSummary() {
 
     let originalTotal = selectedPackage === 'basic' ? 300 : selectedPackage === 'professional' ? 500 : 0;
     selectedAddons.forEach(addon => {
-        if (addon === 'seo') originalTotal += 299;
+        if (addon === 'seo' && selectedPackage !== 'professional') originalTotal += 299;
         if (addon === 'hosting') originalTotal += 199;
         if (addon === 'vzdrževanje') originalTotal += 199;
     });
@@ -675,13 +669,13 @@ function showStep(stepNumber) {
 function updateSteps() {
     document.querySelectorAll('.step-indicator').forEach((step, index) => {
         step.classList.toggle('active', index + 1 === currentStep);
-    });
+});
 
     document.querySelectorAll('.form-step').forEach((step, index) => {
         step.classList.toggle('active', index + 1 === currentStep);
     });
 
-    const nextButton = document.querySelector('.next-step');
+    const nextButton = document.querySelector('.price-preview .next-step');
     if (nextButton) {
         if (currentStep === totalSteps) {
             nextButton.innerHTML = 'Potrdi Naročilo <i class="fas fa-check"></i>';
@@ -794,8 +788,11 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('click', selectPayment);
     });
 
-    document.querySelectorAll('.next-step').forEach(button => {
-        button.onclick = currentStep === totalSteps ? submitForm : nextStep;
+    document.querySelectorAll('.step-indicator').forEach(step => {
+        step.addEventListener('click', () => {
+            const stepNumber = parseInt(step.dataset.step);
+            showStep(stepNumber);
+        });
     });
 });
 </script>
