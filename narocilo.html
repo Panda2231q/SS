@@ -575,7 +575,9 @@ let selectedPackage = null;
 let selectedAddons = [];
 let selectedPayment = null;
 
-function selectPackage(packageType) {
+function selectPackage(event) {
+    const packageType = event.currentTarget.dataset.packageType;
+    if (!packageType) return;
     selectedPackage = packageType;
     document.querySelectorAll('.project-type-card').forEach(card => {
         card.classList.remove('selected');
@@ -584,7 +586,9 @@ function selectPackage(packageType) {
     updateSummary();
 }
 
-function toggleAddon(addonType) {
+function toggleAddon(event) {
+    const addonType = event.currentTarget.dataset.addonType;
+    if (!addonType) return;
     const index = selectedAddons.indexOf(addonType);
     if (index === -1) {
         selectedAddons.push(addonType);
@@ -595,7 +599,9 @@ function toggleAddon(addonType) {
     updateSummary();
 }
 
-function selectPayment(method) {
+function selectPayment(event) {
+    const method = event.currentTarget.dataset.paymentMethod;
+    if (!method) return;
     selectedPayment = method;
     document.querySelectorAll('.payment-card').forEach(card => {
         card.classList.remove('selected');
@@ -604,7 +610,7 @@ function selectPayment(method) {
 }
 
 function updateSummary() {
-    const packageName = selectedPackage === 'basic' ? 'Osnovni Paket' : 'Profesionalni Paket';
+    const packageName = selectedPackage === 'basic' ? 'Osnovni Paket' : selectedPackage === 'professional' ? 'Profesionalni Paket' : 'Ni izbran';
     document.getElementById('summary-package').textContent = packageName;
 
     const addonsText = selectedAddons.length > 0
@@ -617,7 +623,7 @@ function updateSummary() {
         : 'Brez dodatkov';
     document.getElementById('summary-addons').textContent = addonsText;
 
-    let originalTotal = selectedPackage === 'basic' ? 300 : 500;
+    let originalTotal = selectedPackage === 'basic' ? 300 : selectedPackage === 'professional' ? 500 : 0;
     selectedAddons.forEach(addon => {
         if (addon === 'seo') originalTotal += 299;
         if (addon === 'hosting') originalTotal += 199;
@@ -676,12 +682,14 @@ function updateSteps() {
     });
 
     const nextButton = document.querySelector('.next-step');
-    if (currentStep === totalSteps) {
-        nextButton.innerHTML = 'Potrdi Naročilo <i class="fas fa-check"></i>';
-        nextButton.onclick = submitForm;
-    } else {
-        nextButton.innerHTML = 'Naprej <i class="fas fa-arrow-right"></i>';
-        nextButton.onclick = nextStep;
+    if (nextButton) {
+        if (currentStep === totalSteps) {
+            nextButton.innerHTML = 'Potrdi Naročilo <i class="fas fa-check"></i>';
+            nextButton.onclick = submitForm;
+        } else {
+            nextButton.innerHTML = 'Naprej <i class="fas fa-arrow-right"></i>';
+            nextButton.onclick = nextStep;
+        }
     }
 }
 
@@ -711,7 +719,7 @@ async function submitForm() {
 
     const formData = {
         package: selectedPackage,
-        addons: selectedAddons,
+        addබadd-ons: selectedAddons,
         projectName: document.getElementById('projectName').value,
         clientName: document.getElementById('clientName').value,
         clientEmail: document.getElementById('clientEmail').value,
@@ -769,6 +777,18 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSummary();
     document.querySelector('.prev-step').onclick = prevStep;
     document.getElementById('discountCode').addEventListener('input', updateSummary);
+
+    document.querySelectorAll('.project-type-card').forEach(card => {
+        card.addEventListener('click', selectPackage);
+    });
+
+    document.querySelectorAll('.addon-card').forEach(card => {
+        card.addEventListener('click', toggleAddon);
+    });
+
+    document.querySelectorAll('.payment-card').forEach(card => {
+        card.addEventListener('click', selectPayment);
+    });
 });
 </script>
 </body>
