@@ -566,7 +566,7 @@
     </div>
 
     <script>
-        const stripe = Stripe('pk_test_51RYUBk85PVLMpR1TAbwqilK6C9Me4W4oDyOZnnvEcOGFO89GhBHcK1pjpntZvVLPQiR5EMhwnRi62qu8wZub6rVI00n58gsdWo');
+        const stripe = Stripe('pk_test_51RYUBk85PVLMpR1TAbwqilK6C9Me4W4oDyOZnnvEcOGFO89GhBHcK1pjpntZvVLPQiR5EMhwnRi62qu8wZub6rVI00n58gsdWo'); // Zamenjaj s pravim Stripe Publishable Key
 
         let currentStep = 1;
         const totalSteps = 4;
@@ -574,105 +574,185 @@
         let selectedAddons = [];
         let selectedPayment = null;
 
-        // Ostale funkcije ostanejo enake (selectPackage, toggleAddon, itd.)
-
-        function updateSummary() {
-            const packageName = selectedPackage === 'basic' ? 'Osnovni Paket' : 'Profesionalni Paket';
-            document.getElementById('summary-package').textContent = packageName;
-
-            const addonsText = selectedAddons.length > 0
-                ? selectedAddons.map(addon => {
-                    if (addon === 'seo') return 'SEO Optimizacija';
-                    if (addon === 'hosting') return 'Hosting';
-                    if (addon === 'vzdrževanje') return 'Vzdrževanje';
-                    return addon;
-                }).join(', ')
-                : 'Brez dodatkov';
-            document.getElementById('summary-addons').textContent = addonsText;
-
-            let originalTotal = selectedPackage === 'basic' ? 300 : 500;
-            selectedAddons.forEach(addon => {
-                if (addon === 'seo') originalTotal += 299;
-                if (addon === 'hosting') originalTotal += 199;
-                if (addon === 'vzdrževanje') originalTotal += 199;
+        function selectPackage(packageType) {
+            selectedPackage = packageType;
+            document.querySelectorAll('.project-type-card').forEach(card => {
+                card.classList.remove('selected');
             });
-
-            const discountCode = document.getElementById('discountCode').value.toUpperCase();
-            let discountAmount = 0;
-            if (discountCode === 'SAVE10') {
-                discountAmount = originalTotal * 0.1;
-                document.getElementById('summary-discount').textContent = `${discountAmount.toFixed(2)}€`;
-            } else {
-                document.getElementById('summary-discount').textContent = `0€`;
-            }
-            
-            const total = originalTotal - discountAmount;
-            document.getElementById('summary-total').textContent = `${total.toFixed(2)}€`;
-            document.querySelector('.price-total').textContent = `${total.toFixed(2)}€`;
+            event.currentTarget.classList.add('selected');
+            updateSummary();
         }
 
-        // POPRAVLJENA FUNKCIJA ZA PLAČILO
-        async function submitForm() {
-            if (!selectedPayment) {
-                alert('Prosimo izberite način plačila!');
-                return;
+        function toggleAddon(addonType) {
+            const index = selectedAddons.indexOf(addonType);
+            if (index === -1) {
+                selectedAddons.push(addonType);
+            } else {
+                selectedAddons.splice(index, 1);
             }
+            event.currentTarget.classList.toggle('selected');
+            updateSummary();
+        }
 
-            // Shrani podatke
-            const formData = {
-                package: selectedPackage,
-                addons: selectedAddons,
-                projectName: document.getElementById('projectName').value,
-                clientName: document.getElementById('clientName').value,
-                clientEmail: document.getElementById('clientEmail').value,
-                projectDesc: document.getElementById('projectDesc').value,
-                projectDate: document.getElementById('projectDate').value,
-                projectCategory: document.getElementById('projectCategory').value,
-                discountCode: document.getElementById('discountCode').value,
-                total: parseFloat(document.getElementById('summary-total').textContent.replace('€', ''))
-            };
-            
-            localStorage.setItem('orderData', JSON.stringify(formData));
+        function selectPayment(method) {
+            selectedPayment = method;
+            document.querySelectorAll('.payment-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+        }
 
-            const total = formData.total;
+        function updateSummary() {
+    const packageName = selectedPackage === 'basic' ? 'Osnovni Paket' : 'Profesionalni Paket';
+    document.getElementById('summary-package').textContent = packageName;
 
-            try {
-                // Pošlji podatke na backend
-                const response = await fetch('https://dolphin-app-z8fq2.ondigitalocean.app/create-checkout-session', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        amount: total * 100, // Stripe pričakuje cente
-                        currency: 'eur',
-                        payment_method_types: [selectedPayment],
-                        metadata: {
-                            package: selectedPackage,
-                            addons: selectedAddons.join(','),
-                            projectName: formData.projectName,
-                            clientEmail: formData.clientEmail
-                        }
-                    })
-                });
+    const addonsText = selectedAddons.length > 0
+        ? selectedAddons.map(addon => addon === 'seo' ? 'SEO Optimizacija' : 'Hosting').join(', ')
+        : 'Brez dodatkov';
+    document.getElementById('summary-addons').textContent = addonsText;
 
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Strežnik je vrnil napako: ${response.status} - ${errorText}`);
+    let originalTotal = selectedPackage === 'basic' ? 300 : 500;
+    selectedAddons.forEach(addon => {
+        if (addon === 'seo') originalTotal += 299;
+        if (addon === 'hosting') originalTotal += 199;
+        if (addon === 'vzdrževanje') originalTotal += 199;
+    });
+
+    const discountCode = document.getElementById('discountCode').value.toUpperCase();
+    let discountAmount = 0;
+    if (discountCode === 'SAVE10') {
+        discountAmount = originalTotal * 0.1;
+    }
+    const total = originalTotal - discountAmount;
+
+    document.getElementById('summary-total').textContent = `${total.toFixed(2)}€`;
+    document.querySelector('.price-total').textContent = `${total.toFixed(2)}€`; // Posodobi levo spodaj
+}
+        function validateStep(step) {
+            switch (step) {
+                case 1:
+                    return selectedPackage !== null;
+                case 2:
+                    return document.getElementById('projectName').value.trim() !== '' &&
+                           document.getElementById('clientName').value.trim() !== '' &&
+                           document.getElementById('clientEmail').value.trim() !== '';
+                case 3:
+                    return true; // Dodatki so neobvezni
+                case 4:
+                    return selectedPayment !== null;
+                default:
+                    return false;
+            }
+        }
+
+        function showStep(stepNumber) {
+            for (let i = 1; i < stepNumber; i++) {
+                if (!validateStep(i)) {
+                    alert(`Prosimo izpolnite korak ${i} pred nadaljevanjem.`);
+                    return;
                 }
+            }
+            currentStep = stepNumber;
+            updateSteps();
+        }
 
-                const { sessionId } = await response.json();
-                
-                // Preusmeri na Stripe plačilni proces
-                const { error } = await stripe.redirectToCheckout({ 
-                    sessionId: sessionId 
-                });
+        function updateSteps() {
+            document.querySelectorAll('.step-indicator').forEach((step, index) => {
+                step.classList.toggle('active', index + 1 === currentStep);
+            });
 
-                if (error) {
-                    console.error('Stripe napaka:', error);
-                    alert('Napaka pri plačilu: ' + error.message);
+            document.querySelectorAll('.form-step').forEach((step, index) => {
+                step.classList.toggle('active', index + 1 === currentStep);
+            });
+
+            const nextButton = document.querySelector('.next-step');
+            if (currentStep === totalSteps) {
+                nextButton.innerHTML = 'Potrdi Naročilo <i class="fas fa-check"></i>';
+                nextButton.onclick = submitForm;
+            } else {
+                nextButton.innerHTML = 'Naprej <i class="fas fa-arrow-right"></i>';
+                nextButton.onclick = nextStep;
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                if (validateStep(currentStep)) {
+                    currentStep++;
+                    updateSteps();
+                } else {
+                    alert('Prosimo izpolnite trenutni korak pred nadaljevanjem.');
                 }
-            } catch (error) {
-                console.error('Napaka:', error);
-                alert('Napaka pri povezavi s strežnikom: ' + error.message);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateSteps();
+            }
+        }
+
+       async function submitForm() {
+  const total = parseFloat(document.getElementById('summary-total').textContent.replace('€', ''));
+  try {
+    const response = await fetch('https://dolphin-app-z8fq2.ondigitalocean.app/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount: total * 100,
+        currency: 'eur',
+        payment_method_types: ['card']
+      })
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`Strežnik je vrnil napako: ${response.status} - ${text}`);
+    }
+
+    const session = await response.json();
+    const stripe = Stripe('tvoj_javni_ključ'); // Zamenjaj z resničnim ključem
+    const { error } = await stripe.redirectToCheckout({ sessionId: session.id });
+    if (error) {
+      console.error('Stripe napaka:', error);
+      alert('Napaka pri plačilu: ' + error.message);
+    }
+  } catch (error) {
+    console.error('Napaka:', error);
+    alert('Napaka pri povezavi s strežnikom: ' + error.message);
+  }
+}
+                // Shrani podatke v lokalni pomnilnik
+                localStorage.setItem('orderData', JSON.stringify(formData));
+
+                try {
+                    const response = await fetch('https://dolphin-app-z8fq2.ondigitalocean.app/create-checkout-session', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            amount: total * 100, // Stripe pričakuje cente
+                            currency: 'eur',
+                            payment_method_types: [selectedPayment],
+                            metadata: {
+                                package: selectedPackage,
+                                addons: selectedAddons.join(','),
+                                projectName: formData.projectName
+                            }
+                        })
+                    });
+                    const { sessionId } = await response.json();
+                    const { error } = await stripe.redirectToCheckout({ sessionId });
+                    if (error) {
+                        console.error('Stripe error:', error);
+                        alert('Napaka pri plačilu: ' + error.message);
+                    }
+                } catch (error) {
+                    console.error('Server error:', error);
+                    alert('Napaka pri povezavi s strežnikom.');
+                }
+            } else {
+                alert('Prosimo izberite način plačila!');
             }
         }
 
@@ -682,6 +762,37 @@
             document.querySelector('.prev-step').onclick = prevStep;
             document.getElementById('discountCode').addEventListener('input', updateSummary);
         });
+const cors = require('cors');
+const app = express();
+
+app.use(cors({
+  origin: 'https://dolphin-app-z8fq2.ondigitalocean.app/', // Zamenjaj z domeno svoje spletne strani
+  methods: ['POST'],
+}));
+        // Call your backend to create the Checkout Session
+fetch('/create-checkout-session', {
+  method: 'POST',
+})
+.then(function(response) {
+  return response.json();
+})
+.then(function(session) {
+  return stripe.redirectToCheckout({ sessionId: session.id });
+})
+.then(function(result) {
+  // If `redirectToCheckout` fails due to a browser or network
+  // error, you should display the localized error message to your
+  // customer using `error.message`.
+  if (result.error) {
+    alert(result.error.message);
+  }
+});
+
+app.post('/create-checkout-session', (req, res) => {
+  // Logika za Stripe plačila
+});
+
+app.listen(3000);
     </script>
 </body>
 </html>
